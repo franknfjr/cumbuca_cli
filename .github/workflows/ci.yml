@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Elixir ${{ matrix.elixir }}/OTP ${{ matrix.otp }}
+    runs-on: ${{ matrix.os }}
+    env:
+      MIX_ENV: test
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            elixir: "1.17"
+            otp: "27.0"
+            lint: true
+
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@v4
+
+      - name: Set up Erlang and Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+
+      - name: Install dependencies
+        run: mix deps.get --only $MIX_ENV
+
+      - name: Check that code is formatted
+        run: mix format --check-formatted
+        if: ${{ matrix.lint }}
+
+      - name: Check that there are no unused dependencies in mix.lock
+        run: mix do deps.get, deps.unlock --check-unused
+        if: ${{ matrix.lint }}
+
+      - name: Compile with --warnings-as-errors
+        run: mix compile --warnings-as-errors
+        if: ${{ matrix.lint }}
+
+      - name: Run tests
+        run: mix test
