@@ -1,4 +1,23 @@
 defmodule CumbucaCLI do
+  @moduledoc """
+  CLI para numerar reis e rainhas de Cumbúquia.
+
+  ## Examples
+
+      iex> CumbucaCLI.assign_roman_numerals_to_names([])
+      []
+
+      iex> CumbucaCLI.assign_roman_numerals_to_names(["Pedro"])
+      ["Pedro I"]
+
+      iex> CumbucaCLI.assign_roman_numerals_to_names(["João", "João", "João"])
+      ["João I", "João II", "João III"]
+
+      iex> CumbucaCLI.assign_roman_numerals_to_names(["Maria", "Beatriz", "Carlos", "Maria", "Carlos", "Beatriz", "Beatriz", "Daniel"])
+      ["Maria I", "Beatriz I", "Carlos I", "Maria II", "Carlos II", "Beatriz II", "Beatriz III", "Daniel I"]
+
+  """
+
   @roman_numerals %{
     1000 => "M",
     900 => "CM",
