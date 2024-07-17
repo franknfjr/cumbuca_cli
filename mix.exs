@@ -1,13 +1,14 @@
 defmodule CumbucaCli.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "1.0.0"
 
   def project do
     [
       app: :cumbuca_cli,
       version: @version,
       elixir: "~> 1.17",
+      description: "The command-line tool for the kings and queens of Cumbúquia.",
       start_permanent: Mix.env() == :prod,
       escript: [main_module: CumbucaCLI]
     ]

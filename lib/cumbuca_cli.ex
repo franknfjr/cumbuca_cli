@@ -1,6 +1,6 @@
 defmodule CumbucaCLI do
   @moduledoc """
-  CLI para numerar reis e rainhas de Cumbúquia.
+  The command-line tool for the kings and queens of Cumbúquia.
 
   ## Examples
 
